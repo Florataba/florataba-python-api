@@ -16,18 +16,46 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from florataba_api.views.payment_view import PaymentListCreateAPIView, PaymentRetrieveUpdateAPIView
-from florataba_api.views.user_view import DocumentListCreateAPIView, DocumentRetrieveUpdateAPIView, \
-    UserListCreateAPIView, UserRetrieveUpdateAPIView
+from florataba_api.views.user_view import *
+from florataba_api.views.user_details_view import *
+from florataba_api.views.bouquet_view import *
+from florataba_api.views.discount_view import *
+from florataba_api.views.location_view import *
+from florataba_api.views.notification_view import *
+from florataba_api.views.order_view import *
+from florataba_api.views.order_details_view import *
+from florataba_api.views.payment_view import *
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('documents/', DocumentListCreateAPIView.as_view()),
-    path('documents/<int:pk>/', DocumentRetrieveUpdateAPIView.as_view()),
-
     path('users/', UserListCreateAPIView.as_view()),
     path('users/<str:pk>/', UserRetrieveUpdateAPIView.as_view()),
+
+    path('payments/', PaymentListCreateAPIView.as_view()),
+    path('payments/<int:pk>/', PaymentRetrieveUpdateAPIView.as_view()),
+
+    path('bouquetes/', BouquetListCreateAPIView.as_view()),
+    path('bouquetes/<int:pk>/', BouquetRetrieveUpdateAPIView.as_view()),
+
+    path('discounts/', DiscountListCreateAPIView.as_view()),
+    path('discounts/<int:pk>/', DiscountRetrieveUpdateAPIView.as_view()),
+
+    path('locations/', LocationListCreateAPIView.as_view()),
+    path('locations/<int:pk>/', LocationRetrieveUpdateAPIView.as_view()),
+
+    path('notifications/', NotificationListCreateAPIView.as_view()),
+    path('notifications/<int:pk>/', NotificationRetrieveUpdateAPIView.as_view()),
+
+    path('order_details/', OrderDetailsListCreateAPIView.as_view()),
+    path('order_details/<int:pk>/', OrderDetailsRetrieveUpdateAPIView.as_view()),
+
+    path('orders/', OrderListCreateAPIView.as_view()),
+    path('orders/<int:pk>/', OrderRetrieveUpdateAPIView.as_view()),
+
+    path('user_details/', UserDetailsListCreateAPIView.as_view()),
+    path('user_details/<int:pk>/', UserDetailsRetrieveUpdateAPIView.as_view()),
 
     path('payments/', PaymentListCreateAPIView.as_view()),
     path('payments/<int:pk>/', PaymentRetrieveUpdateAPIView.as_view()),
