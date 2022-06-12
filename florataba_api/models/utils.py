@@ -13,6 +13,7 @@ class EventType(models.TextChoices):
     BIRTHDAYS = 'Birthday'
     VALENTINES_DAY = 'Valentine\'s Day'
     FUNERAL = 'Funeral'
+    SINGLE = 'Single'
 
 
 class OrderStatus(models.TextChoices):
