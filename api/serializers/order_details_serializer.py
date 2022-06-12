@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from florataba_api.models.order_details import OrderDetails
+from domain.models.orders import OrderDetails
 
 
 class OrderDetailsSerializer(serializers.ModelSerializer):

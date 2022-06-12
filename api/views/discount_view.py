@@ -3,8 +3,8 @@ from rest_framework.generics import (
 )
 
 
-from florataba_api.models.discount import Discount
-from florataba_api.serializers.discount_serializer import DiscountSerializer
+from domain.models.users import Discount
+from api.serializers.discount_serializer import DiscountSerializer
 
 
 class DiscountListCreateAPIView(ListCreateAPIView):

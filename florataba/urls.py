@@ -15,19 +15,76 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from florataba_api.views.payment_view import PaymentListCreateAPIView, PaymentRetrieveUpdateAPIView
-from florataba_api.views.user_view import DocumentListCreateAPIView, DocumentRetrieveUpdateAPIView, \
-    UserListCreateAPIView, UserRetrieveUpdateAPIView
+from api.views.user_view import (
+    UserListCreateAPIView, UserRetrieveUpdateAPIView,
+)
+from api.views.user_details_view import (
+    UserDetailsListCreateAPIView, UserDetailsRetrieveUpdateAPIView,
+)
+from api.views.bouquet_view import (
+    BouquetListCreateAPIView, BouquetRetrieveUpdateAPIView,
+)
+from api.views.discount_view import (
+    DiscountListCreateAPIView, DiscountRetrieveUpdateAPIView,
+)
+from api.views.location_view import (
+    LocationListCreateAPIView, LocationRetrieveUpdateAPIView,
+)
+from api.views.notification_view import (
+    NotificationListCreateAPIView, NotificationRetrieveUpdateAPIView,
+)
+from api.views.order_view import (
+    OrderListCreateAPIView, OrderRetrieveUpdateAPIView,
+)
+from api.views.order_details_view import (
+    OrderDetailsListCreateAPIView, OrderDetailsRetrieveUpdateAPIView,
+)
+from api.views.payment_view import (
+    PaymentListCreateAPIView, PaymentRetrieveUpdateAPIView,
+)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('documents/', DocumentListCreateAPIView.as_view()),
-    path('documents/<int:pk>/', DocumentRetrieveUpdateAPIView.as_view()),
+    # Open API Schema
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+
+    # Swagger UI
+    path(
+        "schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
 
     path('users/', UserListCreateAPIView.as_view()),
     path('users/<str:pk>/', UserRetrieveUpdateAPIView.as_view()),
+
+    path('payments/', PaymentListCreateAPIView.as_view()),
+    path('payments/<int:pk>/', PaymentRetrieveUpdateAPIView.as_view()),
+
+    path('bouquetes/', BouquetListCreateAPIView.as_view()),
+    path('bouquetes/<int:pk>/', BouquetRetrieveUpdateAPIView.as_view()),
+
+    path('discounts/', DiscountListCreateAPIView.as_view()),
+    path('discounts/<int:pk>/', DiscountRetrieveUpdateAPIView.as_view()),
+
+    path('locations/', LocationListCreateAPIView.as_view()),
+    path('locations/<int:pk>/', LocationRetrieveUpdateAPIView.as_view()),
+
+    path('notifications/', NotificationListCreateAPIView.as_view()),
+    path('notifications/<int:pk>/', NotificationRetrieveUpdateAPIView.as_view()),
+
+    path('order_details/', OrderDetailsListCreateAPIView.as_view()),
+    path('order_details/<int:pk>/', OrderDetailsRetrieveUpdateAPIView.as_view()),
+
+    path('orders/', OrderListCreateAPIView.as_view()),
+    path('orders/<int:pk>/', OrderRetrieveUpdateAPIView.as_view()),
+
+    path('user_details/', UserDetailsListCreateAPIView.as_view()),
+    path('user_details/<int:pk>/', UserDetailsRetrieveUpdateAPIView.as_view()),
 
     path('payments/', PaymentListCreateAPIView.as_view()),
     path('payments/<int:pk>/', PaymentRetrieveUpdateAPIView.as_view()),

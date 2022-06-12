@@ -3,10 +3,9 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView, ListCreateAPIView,
 )
 
-from florataba_api.models.payment import Payment
-from florataba_api.models.user import Document, User
-from florataba_api.serializers.payment_serializer import PaymentSerializer
-from florataba_api.serializers.user_serializer import DocumentSerializer, UserSerializer
+from domain.models.orders import Payment
+from domain.models.users.user import User
+from api.serializers.payment_serializer import PaymentSerializer
 from rest_framework.response import Response
 
 

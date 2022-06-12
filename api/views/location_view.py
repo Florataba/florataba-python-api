@@ -3,8 +3,8 @@ from rest_framework.generics import (
 )
 
 
-from florataba_api.models.location import Location
-from florataba_api.serializers.location_serializer import LocationSerializer
+from domain.models.users import Location
+from api.serializers.location_serializer import LocationSerializer
 
 
 class LocationListCreateAPIView(ListCreateAPIView):

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from florataba_api.models.user_details import UserDetails
+from domain.models.users import UserDetails
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):

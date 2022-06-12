@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from florataba_api.models.discount import Discount
+from domain.models.users import Discount
 
 
 class DiscountSerializer(serializers.ModelSerializer):

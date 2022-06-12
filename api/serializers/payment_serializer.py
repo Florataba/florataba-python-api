@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from florataba_api.models.payment import Payment
+from domain.models.orders import Payment
 
 
 class PaymentSerializer(serializers.ModelSerializer):

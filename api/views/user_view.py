@@ -3,8 +3,8 @@ from rest_framework.generics import (
 )
 
 
-from florataba_api.models.user import User
-from florataba_api.serializers.user_serializer import UserSerializer
+from domain.models.users import User
+from api.serializers.user_serializer import UserSerializer
 
 
 class UserListCreateAPIView(ListCreateAPIView):

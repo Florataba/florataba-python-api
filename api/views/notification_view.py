@@ -3,8 +3,8 @@ from rest_framework.generics import (
 )
 
 
-from florataba_api.models.notification import Notification
-from florataba_api.serializers.notification_serializer import NotificationSerializer
+from domain.models.users import Notification
+from api.serializers.notification_serializer import NotificationSerializer
 
 
 class NotificationListCreateAPIView(ListCreateAPIView):

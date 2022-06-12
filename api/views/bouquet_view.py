@@ -3,8 +3,8 @@ from rest_framework.generics import (
 )
 
 
-from florataba_api.models.bouquet import Bouquet
-from florataba_api.serializers.bouquet_serializer import BouquetSerializer
+from domain.models.orders import Bouquet
+from api.serializers.bouquet_serializer import BouquetSerializer
 
 
 class BouquetListCreateAPIView(ListCreateAPIView):

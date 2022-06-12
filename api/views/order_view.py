@@ -3,8 +3,8 @@ from rest_framework.generics import (
 )
 
 
-from florataba_api.models.order import Order
-from florataba_api.serializers.order_serializer import OrderSerializer
+from domain.models.orders import Order
+from api.serializers.order_serializer import OrderSerializer
 
 
 class OrderListCreateAPIView(ListCreateAPIView):

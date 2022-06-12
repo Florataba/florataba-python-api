@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from florataba_api.models.notification import Notification
+from domain.models.users import Notification
 
 
 class NotificationSerializer(serializers.ModelSerializer):
