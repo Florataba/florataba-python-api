@@ -45,7 +45,6 @@ from api.views.payment_view import (
     PaymentListCreateAPIView, PaymentRetrieveUpdateAPIView,
 )
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
 
