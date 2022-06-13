@@ -1,7 +1,7 @@
 from django.core.validators import EmailValidator, MinLengthValidator
 from django.db import models
 
-from domain.models.users import UserDetails
+from domain.users import UserDetails
 
 
 class User(models.Model):

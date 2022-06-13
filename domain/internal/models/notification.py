@@ -1,6 +1,6 @@
 from django.db import models
 
-from domain.models.core import BaseUUIDModel, NotificationType
+from domain.core import BaseUUIDModel, NotificationType
 
 
 class Notification(BaseUUIDModel):

@@ -1,7 +1,7 @@
 from django.db import models
 
-from domain.models.core import BaseUUIDModel
-from domain.models.users import (
+from domain.core import BaseUUIDModel
+from domain.users import (
     Discount,
     Location,
 )

@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from domain.models.core import BaseUUIDModel, DiscountType
+from domain.core import BaseUUIDModel, DiscountType
 
 
 class Discount(BaseUUIDModel):

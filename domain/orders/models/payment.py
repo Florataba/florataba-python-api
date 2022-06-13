@@ -1,7 +1,7 @@
 from django.db import models
 
-from domain.models.core import BaseUUIDModel
-from domain.models.users import UserDetails
+from domain.core import BaseUUIDModel
+from domain.users import UserDetails
 
 
 class Payment(BaseUUIDModel):

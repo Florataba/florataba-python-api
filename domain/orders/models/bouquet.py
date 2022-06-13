@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from domain.models.core import BaseUUIDModel, EventTypeBouquet
+from domain.core import BaseUUIDModel, EventTypeBouquet
 
 
 class Bouquet(BaseUUIDModel):

@@ -1,6 +1,6 @@
 from django.db import models
 
-from domain.models.core import BaseUUIDModel
+from domain.core import BaseUUIDModel
 
 
 class Location(BaseUUIDModel):

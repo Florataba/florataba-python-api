@@ -1,6 +1,6 @@
 from django.db import models
-from domain.models.orders import OrderDetails
-from domain.models.core import BaseUUIDModel, OrderStatus
+from domain.orders import OrderDetails
+from domain.core import BaseUUIDModel, OrderStatus
 
 
 class Order(BaseUUIDModel):
