@@ -3,7 +3,7 @@ from injector import inject
 from app_services.users import UserDetailsService
 from domain.core import Singleton
 from domain.core.exceptions import (
-    ObjectDoesNotExistError,
+    ObjectDoesNotExistError, CredentialsNotValidError,
 )
 from domain.core.services import BaseService
 from domain.users.models import (
@@ -48,3 +48,10 @@ class UserService(BaseService, metaclass=type(Singleton)):
     def update(self, user_id: str, data: dict) -> User:
         data = self._link_user_details_entity(data)
         return super().update(user_id, data)
+
+    def login(self, data: dict) -> User:
+        user = self.get_by_id(data.get("email"))
+        if user and data.get("password") == user.password:
+            return user
+        else:
+            raise CredentialsNotValidError
