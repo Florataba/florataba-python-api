@@ -45,7 +45,7 @@ class UserService(BaseService, metaclass=type(Singleton)):
 
     def create(self, data: dict) -> User:
         data = self._link_user_details_entity(data, on_create=True)
-        data['password'] = hashlib.md5(data['password'].encode().hexdigest())
+        data['password'] = hashlib.md5(data['password'].encode()).hexdigest()
         return super().create(data)
 
     def update(self, user_id: str, data: dict) -> User:
@@ -54,7 +54,7 @@ class UserService(BaseService, metaclass=type(Singleton)):
 
     def login(self, data: dict) -> User:
         user = self.get_by_id(data.get("email"))
-        if user and hashlib.md5(data.get("password").encode().hexdigest()) == user.password:
+        if user and hashlib.md5(data.get("password").encode()).hexdigest() == user.password:
             return user
         else:
             raise CredentialsNotValidError
