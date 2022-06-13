@@ -12,7 +12,7 @@ class User(models.Model):
     surname = models.CharField(max_length=30, null=True, blank=True)
     email = models.EmailField(validators=[EmailValidator()], null=False, blank=False, unique=True, primary_key=True)
     phone_number = models.CharField(max_length=20, null=False)
-    details_id = models.ForeignKey(UserDetails, null=False, on_delete=models.CASCADE)
+    details_id = models.ForeignKey(UserDetails, null=True, on_delete=models.CASCADE)
     password = models.CharField(max_length=64, null=False, validators=[MinLengthValidator(5)])
 
     class Meta:

@@ -3,7 +3,6 @@ from injector import inject
 from app_services.orders import OrderDetailsService
 from domain.core import Singleton
 from domain.core.exceptions import (
-    ObjectMustBeLinkedError,
     ObjectDoesNotExistError,
 )
 from domain.core.services import BaseService

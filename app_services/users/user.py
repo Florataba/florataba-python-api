@@ -3,7 +3,6 @@ from injector import inject
 from app_services.users import UserDetailsService
 from domain.core import Singleton
 from domain.core.exceptions import (
-    ObjectMustBeLinkedError,
     ObjectDoesNotExistError,
 )
 from domain.core.services import BaseService
@@ -29,10 +28,7 @@ class UserService(BaseService, metaclass=type(Singleton)):
     def _link_user_details_entity(cls, data: dict, on_create: bool = False) -> dict:
         details_id = data.get("details_id")
         if not details_id and on_create:
-            raise ObjectMustBeLinkedError(
-                User,
-                link_to=[UserDetails],
-            )
+            return data
         elif not details_id and not on_create:
             return data
 
