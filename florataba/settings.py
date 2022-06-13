@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'drf_spectacular',
+    'django_injector',
     'domain',
     'api',
 ]
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_injector.inject_request_middleware',
 ]
 
 REST_FRAMEWORK = {
@@ -86,6 +88,19 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DEV database
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'floratabadb',
+#         'USER': "postgres",
+#         'PASSWORD': "P4r4d0x!",
+#         'HOST': "localhost",
+#         'PORT': "5432",
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
