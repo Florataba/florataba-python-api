@@ -6,6 +6,7 @@ from drf_spectacular.utils import (
     OpenApiParameter,
 )
 from injector import inject
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK,
@@ -53,26 +54,56 @@ class UserViewSet(ViewSet):
         super(UserViewSet, self).setup(request, service, args, kwargs)
 
     @extend_schema(
-        parameters=[OpenApiParameter("id", OpenApiTypes.UUID, OpenApiParameter.PATH)],
-        request=None,
+        parameters=[OpenApiParameter("email", OpenApiTypes.EMAIL, OpenApiParameter.QUERY, required=True)],
+        request=UserUpdateSerializer,
         responses={
             200: OpenApiResponse(response=UserOutputSerializer),
             400: OpenApiResponse(description="Bad request"),
             404: OpenApiResponse(description="Resource not found"),
+            409: OpenApiResponse(description="Resource cannot be deleted: it has linked data")
         },
         tags=GROUP_TAG
     )
-    def retrieve(self, request, pk):
+    @action(methods=["get", "put", "delete"], detail=False, url_path="by-email")
+    def retrieve_by_email(self, request):
         """
-        Get User.
+        Get/Update/Delete User.
         """
-        try:
-            user = self.service.get_by_id(pk)
+        if request.method == "GET":
+            try:
+                user = self.service.get_by_id(request.query_params.get("email"))
 
-            output_serializer = UserOutputSerializer(user)
-            return Response(output_serializer.data, status=HTTP_200_OK)
-        except ObjectDoesNotExistError as e:
-            return Response({"message": e.message}, status=HTTP_404_NOT_FOUND)
+                output_serializer = UserOutputSerializer(user)
+                return Response(output_serializer.data, status=HTTP_200_OK)
+            except ObjectDoesNotExistError as e:
+                return Response({"message": e.message}, status=HTTP_404_NOT_FOUND)
+
+        if request.method == "PUT":
+            incoming_data = UserUpdateSerializer(data=request.data)
+            incoming_data.is_valid(raise_exception=True)
+
+            try:
+                user = self.service.update(
+                    request.query_params.get("email"), incoming_data.validated_data
+                )
+
+                output_serializer = UserOutputSerializer(user)
+                return Response(output_serializer.data, status=HTTP_200_OK)
+            except ObjectDoesNotExistError as e:
+                return Response({"message": e.message}, status=HTTP_404_NOT_FOUND)
+            except ValidationError as e:
+                return Response({"message": e.message}, status=HTTP_400_BAD_REQUEST)
+
+        if request.method == "DELETE":
+            try:
+                deleted_user = self.service.delete(request.query_params.get("email"))
+
+                output_serializer = UserOutputSerializer(deleted_user)
+                return Response(output_serializer.data, status=HTTP_200_OK)
+            except ObjectDoesNotExistError as e:
+                return Response({"message": e.message}, status=HTTP_404_NOT_FOUND)
+            except ObjectCannotBeDeletedError as e:
+                return Response({"message": e.message}, status=HTTP_409_CONFLICT)
 
     @extend_schema(
         request=None,
@@ -115,54 +146,57 @@ class UserViewSet(ViewSet):
         except (ObjectDoesNotExistError, ValidationError) as e:
             return Response({"message": e.message}, status=HTTP_400_BAD_REQUEST)
 
-    @extend_schema(
-        parameters=[OpenApiParameter("id", OpenApiTypes.UUID, OpenApiParameter.PATH)],
-        request=UserUpdateSerializer,
-        responses={
-            200: OpenApiResponse(response=UserOutputSerializer),
-            400: OpenApiResponse(description="Bad request"),
-            404: OpenApiResponse(description="Resource not found"),
-        },
-        tags=GROUP_TAG
-    )
-    def update(self, request, pk):
-        """
-        Update User.
-        """
-        incoming_data = UserUpdateSerializer(data=request.data)
-        incoming_data.is_valid(raise_exception=True)
-
-        try:
-            user = self.service.update(pk, incoming_data.validated_data)
-
-            output_serializer = UserOutputSerializer(user)
-            return Response(output_serializer.data, status=HTTP_200_OK)
-        except ObjectDoesNotExistError as e:
-            return Response({"message": e.message}, status=HTTP_404_NOT_FOUND)
-        except ValidationError as e:
-            return Response({"message": e.message}, status=HTTP_400_BAD_REQUEST)
-
-    @extend_schema(
-        parameters=[OpenApiParameter("id", OpenApiTypes.UUID, OpenApiParameter.PATH)],
-        request=None,
-        responses={
-            200: OpenApiResponse(response=UserOutputSerializer),
-            400: OpenApiResponse(description="Bad request"),
-            404: OpenApiResponse(description="Resource not found"),
-            409: OpenApiResponse(description="Resource cannot be deleted: it has linked data")
-        },
-        tags=GROUP_TAG
-    )
-    def destroy(self, request, pk):
-        """
-        Delete User.
-        """
-        try:
-            deleted_user = self.service.delete(pk)
-
-            output_serializer = UserOutputSerializer(deleted_user)
-            return Response(output_serializer.data, status=HTTP_200_OK)
-        except ObjectDoesNotExistError as e:
-            return Response({"message": e.message}, status=HTTP_404_NOT_FOUND)
-        except ObjectCannotBeDeletedError as e:
-            return Response({"message": e.message}, status=HTTP_409_CONFLICT)
+    # @extend_schema(
+    #     parameters=[OpenApiParameter("email", OpenApiTypes.EMAIL, OpenApiParameter.QUERY, required=True)],
+    #     request=UserUpdateSerializer,
+    #     responses={
+    #         200: OpenApiResponse(response=UserOutputSerializer),
+    #         400: OpenApiResponse(description="Bad request"),
+    #         404: OpenApiResponse(description="Resource not found"),
+    #     },
+    #     tags=GROUP_TAG
+    # )
+    # @action(methods=["put"], detail=False)
+    # def update_by_email(self, request):
+    #     """
+    #     Update User.
+    #     """
+    #     incoming_data = UserUpdateSerializer(data=request.data)
+    #     incoming_data.is_valid(raise_exception=True)
+    #
+    #     try:
+    #         user = self.service.update(
+    #             request.query_params.get("email"), incoming_data.validated_data
+    #         )
+    #
+    #         output_serializer = UserOutputSerializer(user)
+    #         return Response(output_serializer.data, status=HTTP_200_OK)
+    #     except ObjectDoesNotExistError as e:
+    #         return Response({"message": e.message}, status=HTTP_404_NOT_FOUND)
+    #     except ValidationError as e:
+    #         return Response({"message": e.message}, status=HTTP_400_BAD_REQUEST)
+    #
+    # @extend_schema(
+    #     parameters=[OpenApiParameter("id", OpenApiTypes.UUID, OpenApiParameter.PATH)],
+    #     request=None,
+    #     responses={
+    #         200: OpenApiResponse(response=UserOutputSerializer),
+    #         400: OpenApiResponse(description="Bad request"),
+    #         404: OpenApiResponse(description="Resource not found"),
+    #         409: OpenApiResponse(description="Resource cannot be deleted: it has linked data")
+    #     },
+    #     tags=GROUP_TAG
+    # )
+    # def destroy(self, request, pk):
+    #     """
+    #     Delete User.
+    #     """
+    #     try:
+    #         deleted_user = self.service.delete(pk)
+    #
+    #         output_serializer = UserOutputSerializer(deleted_user)
+    #         return Response(output_serializer.data, status=HTTP_200_OK)
+    #     except ObjectDoesNotExistError as e:
+    #         return Response({"message": e.message}, status=HTTP_404_NOT_FOUND)
+    #     except ObjectCannotBeDeletedError as e:
+    #         return Response({"message": e.message}, status=HTTP_409_CONFLICT)
