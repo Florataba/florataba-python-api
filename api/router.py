@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework import routers
 
-from api.internal.views import NotificationViewSet
+from api.internal.views import NotificationViewSet, UserLoginAPIView
 from api.orders.views import (
     BouquetViewSet,
     OrderDetailsViewSet,
@@ -37,6 +37,7 @@ router.register(r"user-details", UserDetailsViewSet, basename="user-details")
 
 urlpatterns = [
     path(r"", include(router.urls)),
+    path("auth/login", UserLoginAPIView.as_view(), name="login"),
 ]
 
 if settings.DEBUG:

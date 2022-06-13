@@ -20,3 +20,9 @@ class ObjectMustBeLinkedError(ValidationError):
         ]
         message = f"{classname._meta.verbose_name} object must be linked to: {', '.join(link_to_verbose_names)}."
         super().__init__(message=message, code=code, params=params)
+
+
+class CredentialsNotValidError(ValidationError):
+    def __init__(self, code=None, params=None):
+        message = f"Incorrect credentials provided."
+        super().__init__(message=message, code=code, params=params)

@@ -41,3 +41,8 @@ class UserInputSerializer(serializers.Serializer):
     phone_number = serializers.CharField(max_length=20, required=True, allow_blank=False)
     details_id = serializers.UUIDField(required=False)
     password = serializers.CharField(max_length=64, required=True, allow_blank=False)
+
+
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(allow_blank=False)
+    password = serializers.CharField(max_length=64, allow_blank=False)

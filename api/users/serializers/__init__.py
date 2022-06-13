@@ -17,4 +17,5 @@ from .user import (
     UserOutputSerializer,
     UserInputSerializer,
     UserUpdateSerializer,
+    UserLoginSerializer,
 )

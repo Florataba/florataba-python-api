@@ -1,3 +1,5 @@
+from typing import Optional
+
 from domain.core import (
     BaseRepository,
     Singleton,
@@ -20,6 +22,12 @@ class LocationRepository(BaseRepository, metaclass=type(Singleton)):
 
 class UserRepository(BaseRepository, metaclass=type(Singleton)):
     BASE_CLASS = User
+
+    def get_by_id(self, object_id: str) -> Optional[BASE_CLASS]:
+        try:
+            return self.BASE_CLASS.objects.get(email=object_id)
+        except self.BASE_CLASS.DoesNotExist:
+            return None
 
 
 class UserDetailsRepository(BaseRepository, metaclass=type(Singleton)):
