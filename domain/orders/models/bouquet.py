@@ -1,7 +1,10 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from domain.core import BaseUUIDModel, EventTypeBouquet
+from domain.core.models import (
+    BaseUUIDModel,
+    EventTypeBouquet,
+)
 
 
 class Bouquet(BaseUUIDModel):
@@ -16,6 +19,10 @@ class Bouquet(BaseUUIDModel):
     is_single_bouquet = models.BooleanField(default=True)
     available_quantity = models.IntegerField(validators=[MinValueValidator(1)])
     img_url = models.CharField(max_length=255, null=False)
+
+    class Meta:
+        verbose_name = 'Bouquet'
+        verbose_name_plural = 'Bouquets'
 
     def get_bouquet_for_event(self, event_type):
         pass

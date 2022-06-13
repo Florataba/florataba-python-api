@@ -1,6 +1,6 @@
 from django.db import models
 
-from domain.core import BaseUUIDModel
+from domain.core.models import BaseUUIDModel
 
 
 class Location(BaseUUIDModel):
@@ -8,3 +8,7 @@ class Location(BaseUUIDModel):
     region = models.CharField(max_length=32, null=True, blank=True)
     build_number = models.CharField(max_length=10, null=False)
     apartment_number = models.CharField(max_length=10, null=False)
+
+    class Meta:
+        verbose_name = 'Location'
+        verbose_name_plural = 'Locations'

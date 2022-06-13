@@ -1,7 +1,10 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from domain.core import BaseUUIDModel, DiscountType
+from domain.core.models import (
+    BaseUUIDModel,
+    DiscountType,
+)
 
 
 class Discount(BaseUUIDModel):
@@ -11,8 +14,6 @@ class Discount(BaseUUIDModel):
         validators=[MinValueValidator(0)], max_digits=5, decimal_places=2, null=False
     )
 
-    def update_discount_type(self, discount_type):
-        self.type = discount_type
-
-    def get_discount_info(self):
-        return self.discount_percent
+    class Meta:
+        verbose_name = 'Discount'
+        verbose_name_plural = 'Discounts'

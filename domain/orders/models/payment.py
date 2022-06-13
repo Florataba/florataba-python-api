@@ -1,7 +1,10 @@
 from django.db import models
 
-from domain.core import BaseUUIDModel
-from domain.users import UserDetails
+from domain.core.models import BaseUUIDModel
+from domain.users.models import (
+    User,
+    UserDetails,
+)
 
 
 class Payment(BaseUUIDModel):
@@ -12,9 +15,9 @@ class Payment(BaseUUIDModel):
     bank_name = models.CharField(max_length=20, null=False)
     expiration_date = models.DateField()
 
-    def set_placeholder_name(self, user):
-        self.placeholder_name = f"{user.first_name} {user.surname}"
-        return True
+    class Meta:
+        verbose_name = 'User Details'
+        verbose_name_plural = 'Users Details'
 
-    def set_card_owner(self, user):
+    def set_card_owner(self, user: User):
         self.user = user

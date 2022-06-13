@@ -1,7 +1,10 @@
-from django.core.validators import EmailValidator, MinLengthValidator
+from django.core.validators import (
+    EmailValidator,
+    MinLengthValidator,
+)
 from django.db import models
 
-from domain.users import UserDetails
+from domain.users.models import UserDetails
 
 
 class User(models.Model):
@@ -10,7 +13,11 @@ class User(models.Model):
     email = models.EmailField(validators=[EmailValidator()], null=False, blank=False, unique=True, primary_key=True)
     phone_number = models.CharField(max_length=20, null=False)
     details_id = models.ForeignKey(UserDetails, null=False, on_delete=models.CASCADE)
-    __password = models.CharField(max_length=64, null=False, validators=[MinLengthValidator(5)])
+    password = models.CharField(max_length=64, null=False, validators=[MinLengthValidator(5)])
+
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
 
     def __str__(self):
         return f"Email: {self.email}"
