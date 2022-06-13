@@ -8,7 +8,7 @@ from domain.core.models import (
 
 class Order(BaseUUIDModel):
     status = models.CharField(max_length=50, choices=OrderStatus.choices, null=False)
-    order_details = models.ForeignKey(OrderDetails, on_delete=models.DO_NOTHING)
+    order_details = models.ForeignKey(OrderDetails, on_delete=models.DO_NOTHING, null=True)
 
     class Meta:
         verbose_name = 'Order'

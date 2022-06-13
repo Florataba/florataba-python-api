@@ -27,10 +27,7 @@ class OrderService(BaseService, metaclass=type(Singleton)):
     def _link_order_details_entity(cls, data: dict, on_create: bool = False) -> dict:
         order_details_id = data.get("order_details_id")
         if not order_details_id and on_create:
-            raise ObjectMustBeLinkedError(
-                Order,
-                link_to=[OrderDetails],
-            )
+            return data
         elif not order_details_id and not on_create:
             return data
 

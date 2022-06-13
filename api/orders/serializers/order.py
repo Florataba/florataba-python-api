@@ -27,4 +27,4 @@ class OrderUpdateSerializer(serializers.Serializer):
 
 
 class OrderInputSerializer(OrderUpdateSerializer):
-    order_details_id = serializers.UUIDField(required=True)
+    order_details_id = serializers.UUIDField(required=False)
