@@ -96,7 +96,7 @@ DATABASES = {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'floratabadb',
 #         'USER': "postgres",
-#         'PASSWORD': "P4r4d0x!",
+#         'PASSWORD': "postgres",
 #         'HOST': "localhost",
 #         'PORT': "5432",
 #     }
