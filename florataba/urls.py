@@ -14,21 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from florataba_api.views.payment_view import PaymentListCreateAPIView, PaymentRetrieveUpdateAPIView
-from florataba_api.views.user_view import DocumentListCreateAPIView, DocumentRetrieveUpdateAPIView, \
-    UserListCreateAPIView, UserRetrieveUpdateAPIView
+from api.router import urlpatterns as api_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('documents/', DocumentListCreateAPIView.as_view()),
-    path('documents/<int:pk>/', DocumentRetrieveUpdateAPIView.as_view()),
+    # API
+    path("api/", include(api_urlpatterns)),
 
-    path('users/', UserListCreateAPIView.as_view()),
-    path('users/<str:pk>/', UserRetrieveUpdateAPIView.as_view()),
+    # Open API Schema
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
 
-    path('payments/', PaymentListCreateAPIView.as_view()),
-    path('payments/<int:pk>/', PaymentRetrieveUpdateAPIView.as_view()),
+    # Swagger UI
+    path(
+        "schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+
+
 ]
